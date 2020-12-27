@@ -1,3 +1,4 @@
 {
     "python.pythonPath": "C:\\Users\\해규\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
+    "python.linting.pylintArgs": ["--generate-members"]
 }
