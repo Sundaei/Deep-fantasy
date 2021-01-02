@@ -33,3 +33,37 @@ print(params[0].size())
 input=tc.randn(1,1,32,32)
 out=net(input)
 print(out)
+net.zero_grad()
+out.backward(tc.randn(1,10))
+output=net(input)
+target=tc.randn(10)
+target=target.view(1,-1)
+criterion=nn.MSELoss()
+
+loss=criterion(output,target)
+print(loss)
+
+print(loss.grad_fn)
+print(loss.grad_fn.next_functions[0][0])
+print(loss.grad_fn.next_functions[0][0].next_functions[0][0])
+net.zero_grad()
+print('conv1.bias.grad before backward')
+print(net.conv1.bias.grad)
+
+loss.backward()
+
+print('conv1.bias. grad after backward')
+print(net.conv1.bias.grad)
+
+
+learning_rate=0.01
+for f in net.parameters():
+    f.data.sub_(f.grad.data*learning_rate)
+
+import torch.optim as optim
+optimizer=optim.SGD(net.parameters(),lr=0.01)
+optimizer.zero_grad()
+output=net(input)
+loss=criterion(output,target)
+loss.backward()
+optimizer.step()
