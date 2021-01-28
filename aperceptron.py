@@ -2,6 +2,7 @@ import torch as tc
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+import numpy
 
 device='cuda'if tc.cuda.is_available() else 'cpu'
 tc.manual_seed(777)
